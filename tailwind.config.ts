@@ -1,6 +1,6 @@
+// tailwind.config.ts - Use this combined config
 import type { Config } from "tailwindcss";
-
-const defaultTheme = require("tailwindcss/defaultTheme");
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
   content: [
@@ -8,10 +8,11 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class",
+  darkMode: ["class"],
   theme: {
     fontFamily: {
-      "euclid-circular-a": ["Euclid Circular A"],
+      sans: ['"Satoshi"', ...defaultTheme.fontFamily.sans], // Admin font
+      "euclid-circular-a": ["Euclid Circular A"], // Client font
     },
     container: {
       center: true,
@@ -21,108 +22,161 @@ const config: Config = {
         xl: "0",
       },
     },
-    colors: {
-      current: "currentColor",
-      transparent: "transparent",
-      white: "#FFFFFF",
-      body: "#6C6F93",
-      meta: {
-        DEFAULT: "#F7F9FC",
-        2: "#495270",
-        3: "#606882",
-        4: "#8D93A5",
-        5: "#BBBEC9",
-      },
-      dark: {
-        DEFAULT: "#1C274C",
-        2: "#495270",
-        3: "#606882",
-        4: "#8D93A5",
-        5: "#BBBEC9",
-      },
-      gray: {
-        DEFAULT: "#F3F5F6",
-        1: "#F9FAFB",
-        2: "#F3F4F6",
-        3: "#E5E7EB",
-        4: "#D1D5DB",
-        5: "#9CA3AF",
-        6: "#6B7280",
-        7: "#374151",
-      },
-      blue: {
-        DEFAULT: "#3C50E0",
-        dark: "#1C3FB7",
-        light: "#5475E5",
-        "light-2": "#8099EC",
-        "light-3": "#ADBCF2",
-        "light-4": "#C3CEF6",
-        "light-5": "#E1E8FF",
-      },
-      red: {
-        DEFAULT: "#F23030",
-        dark: "#E10E0E",
-        light: "#F56060",
-        "light-2": "#F89090",
-        "light-3": "#FBC0C0",
-        "light-4": "#FDD8D8",
-        "light-5": "#FEEBEB",
-        "light-6": "#FEF3F3",
-      },
-      green: {
-        DEFAULT: "#22AD5C",
-        dark: "#1A8245",
-        light: "#2CD673",
-        "light-2": "#57DE8F",
-        "light-3": "#82E6AC",
-        "light-4": "#ACEFC8",
-        "light-5": "#C2F3D6",
-        "light-6": "#DAF8E6",
-      },
-      yellow: {
-        DEFAULT: "#FBBF24",
-        dark: "#F59E0B",
-        "dark-2": "#D97706",
-        light: "#FCD34D",
-        "light-1": "#FDE68A",
-        "light-2": "#FEF3C7",
-        "light-4": "#FFFBEB",
-      },
-      teal: {
-        DEFAULT: "#02AAA4",
-        dark: "#06A09B",
-      },
-      orange: {
-        DEFAULT: "#F27430",
-        dark: "#E1580E",
-      },
-    },
-    screens: {
-      xsm: "375px",
-      lsm: "425px",
-      "3xl": "2000px",
-      ...defaultTheme.screens,
-    },
     extend: {
+      screens: {
+        "2xsm": "375px",
+        xsm: "425px",
+        lsm: "425px",
+        "3xl": "2000px",
+      },
+      colors: {
+        current: "currentColor",
+        transparent: "transparent",
+        white: "#FFFFFF",
+        
+        // Admin colors (from first config)
+        primary: "#5750F1",
+        stroke: "#E6EBF1",
+        "stroke-dark": "#27303E",
+        
+        // Client colors (from second config)
+        body: "#6C6F93",
+        meta: {
+          DEFAULT: "#F7F9FC",
+          2: "#495270",
+          3: "#606882",
+          4: "#8D93A5",
+          5: "#BBBEC9",
+        },
+        
+        // Shared colors - keeping both variations
+        dark: {
+          DEFAULT: "#111928", // Admin default
+          2: "#1F2A37",       // Admin
+          3: "#374151",       // Shared
+          4: "#4B5563",       // Admin
+          5: "#6B7280",       // Shared
+          6: "#9CA3AF",       // Shared
+          7: "#D1D5DB",       // Admin
+          8: "#E5E7EB",       // Admin
+        },
+        
+        // Client dark colors (will override in client CSS)
+        "dark-client": {
+          DEFAULT: "#1C274C",
+          2: "#495270",
+          3: "#606882",
+          4: "#8D93A5",
+          5: "#BBBEC9",
+        },
+        
+        gray: {
+          DEFAULT: "#EFF4FB", // Admin
+          dark: "#122031",
+          1: "#F9FAFB",
+          2: "#F3F4F6",
+          3: "#E5E7EB",
+          4: "#D1D5DB",
+          5: "#9CA3AF",
+          6: "#6B7280",
+          7: "#374151",
+        },
+        
+        // Client gray (will be used in client theme)
+        "gray-client": "#F3F5F6",
+        
+        green: {
+          DEFAULT: "#22AD5C",
+          dark: "#1A8245",
+          light: {
+            DEFAULT: "#2CD673",
+            1: "#10B981",
+            2: "#57DE8F",
+            3: "#82E6AC",
+            4: "#ACEFC8",
+            5: "#C2F3D6",
+            6: "#DAF8E6",
+            7: "#E9FBF0",
+          },
+        },
+        
+        red: {
+          DEFAULT: "#F23030",
+          dark: "#E10E0E",
+          light: {
+            DEFAULT: "#F56060",
+            2: "#F89090",
+            3: "#FBC0C0",
+            4: "#FDD8D8",
+            5: "#FEEBEB",
+            6: "#FEF3F3",
+          },
+        },
+        
+        blue: {
+          DEFAULT: "#3C50E0",
+          dark: "#1C3FB7",
+          light: {
+            DEFAULT: "#5475E5",
+            2: "#8099EC",
+            3: "#ADBCF2",
+            4: "#C3CEF6",
+            5: "#E1E8FF",
+          },
+        },
+        
+        yellow: {
+          DEFAULT: "#FBBF24",
+          dark: {
+            DEFAULT: "#F59E0B",
+            2: "#D97706",
+          },
+          light: {
+            DEFAULT: "#FCD34D",
+            1: "#FDE68A",
+            2: "#FEF3C7",
+            4: "#FFFBEB",
+          },
+        },
+        
+        teal: {
+          DEFAULT: "#02AAA4",
+          dark: "#06A09B",
+        },
+        
+        orange: {
+          DEFAULT: "#F27430",
+          dark: "#E1580E",
+          light: {
+            DEFAULT: "#F59460",
+          },
+        },
+      },
+      
       fontSize: {
         "2xs": ["10px", "17px"],
         "heading-1": ["60px", "72px"],
-        "heading-2": ["48px", "64px"],
+        "heading-2": ["48px", "64px"], // Client version
         "heading-3": ["40px", "48px"],
-        "heading-4": ["30px", "38px"],
+        "heading-4": ["35px", "45px"], // Admin / ["30px", "38px"] Client
         "heading-5": ["28px", "40px"],
         "heading-6": ["24px", "30px"],
-        "custom-xl": ["20px", "24px"],
-        "custom-lg": ["18px", "24px"],
-        "custom-sm": ["14px", "22px"],
-        "custom-xs": ["12px", "20px"],
-        "custom-2xl": ["24px", "34px"],
-        "custom-4xl": ["36px", "48px"],
-        "custom-1": ["22px", "30px"],
-        "custom-2": ["32px", "38px"],
-        "custom-3": ["35px", "45px"],
+        "body-2xlg": ["22px", "28px"], // Admin only
+        "body-sm": ["14px", "22px"],
+        "body-xs": ["12px", "20px"],
+        "custom-xl": ["20px", "24px"],     // Client
+        "custom-lg": ["18px", "24px"],     // Client
+        "custom-sm": ["14px", "22px"],     // Client
+        "custom-xs": ["12px", "20px"],     // Client
+        "custom-2xl": ["24px", "34px"],    // Client
+        "custom-4xl": ["36px", "48px"],    // Client
+        "custom-1": ["22px", "30px"],      // Client
+        "custom-2": ["32px", "38px"],      // Client
+        "custom-3": ["35px", "45px"],      // Client
       },
+      
       spacing: {
+        // All spacing values from both configs combined
         4.5: "1.125rem",
         5.5: "1.375rem",
         6.5: "1.625rem",
@@ -157,6 +211,7 @@ const config: Config = {
         26: "6.5rem",
         27: "6.75rem",
         27.5: "6.875rem",
+        28.5: "7.125rem",
         29: "7.25rem",
         29.5: "7.375rem",
         30: "7.5rem",
@@ -174,8 +229,10 @@ const config: Config = {
         39.5: "9.875rem",
         40: "10rem",
         42.5: "10.625rem",
+        44: "11rem",
         45: "11.25rem",
         46: "11.5rem",
+        46.5: "11.625rem",
         47.5: "11.875rem",
         49: "12.25rem",
         50: "12.5rem",
@@ -196,11 +253,14 @@ const config: Config = {
         67.5: "16.875rem",
         70: "17.5rem",
         72.5: "18.125rem",
+        73: "18.25rem",
         75: "18.75rem",
         90: "22.5rem",
         92.5: "23.125rem",
         94: "23.5rem",
+        95: "23.75rem",
         100: "25rem",
+        103: "25.75rem",
         110: "27.5rem",
         115: "28.75rem",
         122.5: "30.625rem",
@@ -216,35 +276,214 @@ const config: Config = {
         192.5: "48.125rem",
         203: "50.75rem",
         230: "57.5rem",
+        242.5: "60.625rem",
       },
+      
       maxWidth: {
+        // Combined from both configs
+        2.5: "0.625rem",
+        3: "0.75rem",
+        4: "1rem",
+        7: "1.75rem",
+        9: "2.25rem",
+        10: "2.5rem",
+        10.5: "2.625rem",
+        11: "2.75rem",
+        13: "3.25rem",
+        14: "3.5rem",
+        15: "3.75rem",
+        16: "4rem",
+        22.5: "5.625rem",
+        25: "6.25rem",
         30: "7.5rem",
+        34: "8.5rem",
+        35: "8.75rem",
         40: "10rem",
+        42.5: "10.625rem",
+        44: "11rem",
+        45: "11.25rem",
+        46.5: "11.625rem",
         50: "12.5rem",
+        60: "15rem",
+        70: "17.5rem",
+        90: "22.5rem",
+        94: "23.5rem",
+        100: "25rem",
+        103: "25.75rem",
+        125: "31.25rem",
+        132.5: "33.125rem",
+        142.5: "35.625rem",
+        150: "37.5rem",
+        180: "45rem",
+        203: "50.75rem",
+        230: "57.5rem",
+        242.5: "60.625rem",
+        270: "67.5rem",
+        280: "70rem",
+        292.5: "73.125rem",
       },
+      
+      maxHeight: {
+        35: "8.75rem",
+        70: "17.5rem",
+        90: "22.5rem",
+        300: "18.75rem",
+        550: "34.375rem",
+      },
+      
+      minWidth: {
+        22.5: "5.625rem",
+        42.5: "10.625rem",
+        47.5: "11.875rem",
+        75: "18.75rem",
+      },
+      
       zIndex: {
         999999: "999999",
         99999: "99999",
         9999: "9999",
         999: "999",
         99: "99",
+        9: "9",
         1: "1",
       },
+      
+      opacity: {
+        65: ".65",
+      },
+      
+      aspectRatio: {
+        "4/3": "4 / 3",
+        "21/9": "21 / 9",
+      },
+      
+      backgroundImage: {
+        video: "url('../images/video/video.png')",
+      },
+      
+      content: {
+        "icon-copy": 'url("../images/icon/icon-copy-alt.svg")',
+      },
+      
+      transitionProperty: { 
+        width: "width", 
+        stroke: "stroke" 
+      },
+      
+      borderWidth: {
+        6: "6px",
+        10: "10px",
+        12: "12px",
+      },
+      
       boxShadow: {
-        1: "0px 1px 2px 0px rgba(166, 175, 195, 0.25)",
-        2: "0px 6px 24px 0px rgba(235, 238, 251, 0.40), 0px 2px 4px 0px rgba(148, 163, 184, 0.05)",
-        3: "0px 2px 16px 0px rgba(13, 10, 44, 0.12)",
-        testimonial:
-          "0px 0px 4px 0px rgba(148, 163, 184, 0.10), 0px 6px 12px 0px rgba(224, 227, 238, 0.45)",
+        // Combined all shadow values from both configs
+        default: "0px 4px 7px 0px rgba(0, 0, 0, 0.14)",
+        error: "0px 12px 34px 0px rgba(13, 10, 44, 0.05)",
+        card: "0px 1px 2px 0px rgba(0, 0, 0, 0.12)",
+        "card-2": "0px 8px 13px -3px rgba(0, 0, 0, 0.07)",
+        "card-3": "0px 2px 3px 0px rgba(183, 183, 183, 0.50)",
+        "card-4": "0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
+        "card-5": "0px 1px 3px 0px rgba(0, 0, 0, 0.13)",
+        "card-6": "0px 3px 8px 0px rgba(0, 0, 0, 0.08)",
+        "card-7": "0px 0.5px 3px 0px rgba(0, 0, 0, 0.18)",
+        "card-8": "0px 1px 2px 0px rgba(0, 0, 0, 0.10)",
+        "card-9": "0px 1px 3px 0px rgba(0, 0, 0, 0.08)",
+        "card-10": "0px 2px 3px 0px rgba(0, 0, 0, 0.10)",
+        switcher: "0px 2px 4px rgba(0, 0, 0, 0.2), inset 0px 2px 2px #FFFFFF, inset 0px -1px 1px rgba(0, 0, 0, 0.1)",
+        "switch-1": "0px 0px 4px 0px rgba(0, 0, 0, 0.10)",
+        "switch-2": "0px 0px 5px 0px rgba(0, 0, 0, 0.15)",
+        datepicker: "-5px 0 0 #1f2a37, 5px 0 0 #1f2a37",
+        1: "0px 1px 2px 0px rgba(166, 175, 195, 0.25)", // Client version
+        2: "0px 6px 24px 0px rgba(235, 238, 251, 0.40), 0px 2px 4px 0px rgba(148, 163, 184, 0.05)", // Client
+        3: "0px 2px 16px 0px rgba(13, 10, 44, 0.12)", // Client
+        4: "0px 13px 40px 0px rgba(13, 10, 44, 0.22), 0px -8px 18px 0px rgba(13, 10, 44, 0.04)",
+        5: "0px 10px 30px 0px rgba(85, 106, 235, 0.12), 0px 4px 10px 0px rgba(85, 106, 235, 0.04), 0px -18px 38px 0px rgba(85, 106, 235, 0.04)",
+        6: "0px 12px 34px 0px rgba(13, 10, 44, 0.08), 0px 34px 26px 0px rgba(13, 10, 44, 0.05)",
+        7: "0px 18px 25px 0px rgba(113, 116, 152, 0.05)",
+        testimonial: "0px 0px 4px 0px rgba(148, 163, 184, 0.10), 0px 6px 12px 0px rgba(224, 227, 238, 0.45)",
         breadcrumb: "0px 1px 0px 0px #E5E7EB, 0px -1px 0px 0px #E5E7EB",
-        range:
-          "0px 0px 1px 0px rgba(33, 37, 41, 0.08), 0px 2px 2px 0px rgba(33, 37, 41, 0.06)",
+        range: "0px 0px 1px 0px rgba(33, 37, 41, 0.08), 0px 2px 2px 0px rgba(33, 37, 41, 0.06)",
         filter: "0px 1px 0px 0px #E5E7EB",
         list: "1px 0px 0px 0px #E5E7EB",
         input: "inset 0 0 0 2px #3C50E0",
+      },
+      
+      dropShadow: {
+        card: "0px 8px 13px rgba(0, 0, 0, 0.07)",
+        1: "0px 1px 0px #E2E8F0",
+        2: "0px 1px 4px rgba(0, 0, 0, 0.12)",
+        3: "0px 0px 4px rgba(0, 0, 0, 0.15)",
+        4: "0px 0px 2px rgba(0, 0, 0, 0.2)",
+        5: "0px 1px 5px rgba(0, 0, 0, 0.2)",
+      },
+      
+      keyframes: {
+        // All keyframes from admin config
+        linspin: {
+          "100%": { transform: "rotate(360deg)" },
+        },
+        easespin: {
+          "12.5%": { transform: "rotate(135deg)" },
+          "25%": { transform: "rotate(270deg)" },
+          "37.5%": { transform: "rotate(405deg)" },
+          "50%": { transform: "rotate(540deg)" },
+          "62.5%": { transform: "rotate(675deg)" },
+          "75%": { transform: "rotate(810deg)" },
+          "87.5%": { transform: "rotate(945deg)" },
+          "100%": { transform: "rotate(1080deg)" },
+        },
+        "left-spin": {
+          "0%": { transform: "rotate(130deg)" },
+          "50%": { transform: "rotate(-5deg)" },
+          "100%": { transform: "rotate(130deg)" },
+        },
+        "right-spin": {
+          "0%": { transform: "rotate(-130deg)" },
+          "50%": { transform: "rotate(5deg)" },
+          "100%": { transform: "rotate(-130deg)" },
+        },
+        rotating: {
+          "0%, 100%": { transform: "rotate(360deg)" },
+          "50%": { transform: "rotate(0deg)" },
+        },
+        topbottom: {
+          "0%, 100%": { transform: "translate3d(0, -100%, 0)" },
+          "50%": { transform: "translate3d(0, 0, 0)" },
+        },
+        bottomtop: {
+          "0%, 100%": { transform: "translate3d(0, 0, 0)" },
+          "50%": { transform: "translate3d(0, -100%, 0)" },
+        },
+        line: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(100%)" },
+        },
+        "line-revert": {
+          "0%, 100%": { transform: "translateY(100%)" },
+          "50%": { transform: "translateY(0)" },
+        },
+      },
+      
+      animation: {
+        linspin: "linspin 1568.2353ms linear infinite",
+        easespin: "easespin 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both",
+        "left-spin": "left-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both",
+        "right-spin": "right-spin 1333ms cubic-bezier(0.4, 0, 0.2, 1) infinite both",
+        "ping-once": "ping 5s cubic-bezier(0, 0, 0.2, 1)",
+        rotating: "rotating 30s linear infinite",
+        topbottom: "topbottom 60s infinite alternate linear",
+        bottomtop: "bottomtop 60s infinite alternate linear",
+        "spin-1.5": "spin 1.5s linear infinite",
+        "spin-2": "spin 2s linear infinite",
+        "spin-3": "spin 3s linear infinite",
+        line1: "line 10s infinite linear",
+        line2: "line-revert 8s infinite linear",
+        line3: "line 7s infinite linear",
       },
     },
   },
   plugins: [],
 };
+
 export default config;
